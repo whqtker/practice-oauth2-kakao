@@ -8,6 +8,8 @@ import com.ll.here_is_paw_back_member.global.security.SecurityUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.ll.kakao_login.domain.member.entity.Member;
+import org.ll.kakao_login.domain.member.service.MemberService;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
