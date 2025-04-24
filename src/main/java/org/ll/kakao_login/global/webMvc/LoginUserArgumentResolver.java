@@ -2,8 +2,8 @@ package org.ll.kakao_login.global.webMvc;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ll.ai_recommendation.domain.member.entity.Member;
-import org.ll.ai_recommendation.domain.member.service.MemberService;
+import org.ll.kakao_login.domain.member.entity.Member;
+import org.ll.kakao_login.domain.member.service.MemberService;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;

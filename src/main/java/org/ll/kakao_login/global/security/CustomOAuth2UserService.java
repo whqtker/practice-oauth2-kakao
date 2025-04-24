@@ -3,8 +3,8 @@ package org.ll.kakao_login.global.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ll.ai_recommendation.domain.member.entity.Member;
-import org.ll.ai_recommendation.domain.member.service.MemberService;
+import org.ll.kakao_login.domain.member.entity.Member;
+import org.ll.kakao_login.domain.member.service.MemberService;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;

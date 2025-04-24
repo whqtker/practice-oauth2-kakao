@@ -2,9 +2,9 @@ package org.ll.kakao_login.global.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ll.ai_recommendation.global.security.CustomAuthorizationRequestResolver;
-import org.ll.ai_recommendation.global.security.CustomOAuth2AuthenticationSuccessHandler;
-import org.ll.ai_recommendation.global.security.CustomOAuth2UserService;
+import org.ll.kakao_login.global.security.CustomAuthorizationRequestResolver;
+import org.ll.kakao_login.global.security.CustomOAuth2AuthenticationSuccessHandler;
+import org.ll.kakao_login.global.security.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

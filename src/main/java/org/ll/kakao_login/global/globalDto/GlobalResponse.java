@@ -1,8 +1,7 @@
 package org.ll.kakao_login.global.globalDto;
 
-
-import com.ll.here_is_paw_back_member.global.error.ErrorCode;
 import lombok.Getter;
+import org.ll.kakao_login.global.error.ErrorCode;
 
 import java.time.LocalDateTime;
 
