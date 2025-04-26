@@ -1,6 +1,7 @@
 package org.ll.kakao_login.global.security;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 // 클라이언트의 OAuth2 요청을 가로채어 커스텀
 @Component
+@Slf4j
 public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRequestResolver {
     private final DefaultOAuth2AuthorizationRequestResolver defaultResolver;
 
@@ -39,26 +41,26 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
 
     // OAuth2AuthorizationRequest를 커스터마이징
     private OAuth2AuthorizationRequest customizeAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request) {
-        // authorizationRequest가 null이거나 request가 null인 경우 null 반환
         if (authorizationRequest == null || request == null) {
             return null;
         }
 
-        // 리다이렉트 url 추출
+        // 쿼리 파라미터에서 redirectUrl 추출
         String redirectUrl = request.getParameter("redirectUrl");
+        log.info("redirectUrl: {}", redirectUrl);
 
-        // 추가적인 파라미터를 HashMap으로 추출
         Map<String, Object> additionalParameters = new HashMap<>(authorizationRequest.getAdditionalParameters());
 
-        // 리다이렉트 url이 유효하다면 추가 파라미터의 state로 설정
-        if (redirectUrl != null && !redirectUrl.isEmpty()) {
-            additionalParameters.put("state", redirectUrl);
-        }
+        // state에 반드시 값이 들어가도록 보장
+        String stateValue = (redirectUrl != null && !redirectUrl.isEmpty())
+            ? redirectUrl
+            : "http://localhost:5173/"; // 또는 서비스 메인 URL
 
-        // 새로운 OAuth2AuthorizationRequest를 빌드, 반환
+        additionalParameters.put("state", stateValue);
+
         return OAuth2AuthorizationRequest.from(authorizationRequest)
                 .additionalParameters(additionalParameters)
-                .state(redirectUrl)
+                .state(stateValue)
                 .build();
     }
 }

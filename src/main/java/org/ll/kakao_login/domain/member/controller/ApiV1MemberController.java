@@ -83,14 +83,14 @@ public class ApiV1MemberController {
     // 유저 기본 정보 가져오기
     @GetMapping("/me")
     public GlobalResponse<?> me(@LoginUser Member loginUser) {
+        log.debug("Received /me request for user: {}", loginUser);  // 디버깅용 로그
 
         if (loginUser == null) {
-            // 미로그인시 401 Unauthorized 반환
+            log.debug("No authenticated user found");  // 디버깅용 로그
             return GlobalResponse.error(ErrorCode.ACCESS_DENIED);
         }
 
         MemberInfoDto userInfo = memberService.me(loginUser);
-
         return GlobalResponse.success(userInfo);
     }
 

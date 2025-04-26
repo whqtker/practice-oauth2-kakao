@@ -1,1 +1,29 @@
-spring.application.name=kakao_login
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  profiles:
+    active: dev
+    include: secret
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            redirect-uri: "${custom.site.backUrl}/{action}/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: test    # ????? ??
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me    # ??? ?? ?? URI
+            user-name-attribute: id    # ??? ???? ??? ??? ???? ??
+logging:
+  level:
+    root: info
+    com.ll.ai_recommendation: debug

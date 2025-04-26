@@ -1,1 +1,5 @@
-spring.application.name=kakao_login
+spring:
+
+custom:
+  site:
+    backUrl: http://localhost:8080

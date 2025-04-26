@@ -14,7 +14,6 @@ import org.ll.kakao_login.domain.member.repository.MemberRepository;
 import org.ll.kakao_login.global.error.ErrorCode;
 import org.ll.kakao_login.global.exception.CustomException;
 import org.ll.kakao_login.global.rq.Rq;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +28,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
-    @Value("${custom.bucket.name}")
-    private String bucketName;
-
-    @Value("${custom.bucket.region}")
-    private String region;
-
-    @Value("${custom.bucket.avatar}")
-    private String dirName;
+//    @Value("${custom.bucket.name}")
+//    private String bucketName;
+//
+//    @Value("${custom.bucket.region}")
+//    private String region;
+//
+//    @Value("${custom.bucket.avatar}")
+//    private String dirName;
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -230,9 +229,9 @@ public class MemberService {
         return UUID.randomUUID().toString() + "." + extension;
     }
 
-    private String getS3FileUrl(String fileName) {
-        return "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + dirName + "/" + fileName;
-    }
+//    private String getS3FileUrl(String fileName) {
+//        return "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + dirName + "/" + fileName;
+//    }
 
 //    private void deleteImageToS3(String fileName) {
 //        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
