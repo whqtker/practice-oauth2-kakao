@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { backUrl } from '../constants';
-import {Member} from "../types/member.ts";
+import { Member } from "../types/member.ts";
 
 interface AuthContextType {
     isLoggedIn: boolean;
@@ -17,8 +17,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [userData, setUserData] = useState<Member | null>(null);
 
-    // 인증 상태 확인 함수
-    const checkAuthStatus = async (): Promise<boolean> => {
+    // useCallback으로 감싸기
+    const checkAuthStatus = useCallback(async (): Promise<boolean> => {
         try {
             const response = await axios.get(`${backUrl}/api/v1/members/me`, {
                 withCredentials: true,
@@ -38,9 +38,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } catch (error) {
             console.log(error)
             setIsLoggedIn(false);
+            setUserData(null);
             return false;
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        checkAuthStatus();
+    }, [checkAuthStatus]);
 
     const login = () => {
         setIsLoggedIn(true);
@@ -60,11 +65,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.error('로그아웃 오류:', error);
         }
     };
-
-    // 앱 시작 시 인증 상태 확인
-    useEffect(() => {
-        checkAuthStatus();
-    }, []);
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, login, logout, checkAuthStatus, userData }}>

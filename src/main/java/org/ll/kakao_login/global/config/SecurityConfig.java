@@ -62,8 +62,8 @@ public class SecurityConfig {
             AbstractHttpConfigurer::disable
         )
         .sessionManagement((sessionManagement) -> sessionManagement
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//              .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+              .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 
         )
         .oauth2Login(

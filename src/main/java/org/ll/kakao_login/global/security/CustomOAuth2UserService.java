@@ -38,11 +38,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Member member = memberService.modifyOrJoin(username, nickname, profileImgUrl);
 
         return new SecurityUser(
-                member.getId(),
-                member.getUsername(),
-                "",
-                member.getNickname(),
-                member.getAuthorities()
+            member.getId(),
+            member.getUsername(),
+            "",
+            member.getNickname(),
+            member.getAvatar(), // avatar도 넘김
+            member.getAuthorities()
         );
     }
 }

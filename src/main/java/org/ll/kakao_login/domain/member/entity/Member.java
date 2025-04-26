@@ -70,10 +70,11 @@ public class Member extends BaseEntity {
 //    private List<Payment> payments = new ArrayList<>();
     private Long point;
 
-    public Member(long id, String username, String nickname) {
+    public Member(long id, String username, String nickname, String avatar) {
         this.setId(id);
         this.username = username;
         this.nickname = nickname;
+        this.avatar = avatar;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

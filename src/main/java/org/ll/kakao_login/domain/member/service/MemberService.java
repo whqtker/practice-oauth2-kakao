@@ -124,10 +124,9 @@ public class MemberService {
         long id = (long) payload.get("id");
         String username = (String) payload.get("username");
         String nickname = (String) payload.get("nickname");
+        String avatar = (String) payload.get("avatar");
 
-        Member member = new Member(id, username, nickname);
-
-        return member;
+        return new Member(id, username, nickname, avatar);
     }
 
 //    @Transactional
@@ -169,7 +168,26 @@ public class MemberService {
     @Transactional
     public Member modifyOrJoin(String username, String nickname, String avatar) {
         Optional<Member> opMember = findByUsername(username);
-        return opMember.orElseGet(() -> signup(username, "", nickname, avatar));
+        if (opMember.isPresent()) {
+            Member member = opMember.get();
+            boolean changed = false;
+            if (nickname != null && !nickname.equals(member.getNickname())) {
+                member.setNickname(nickname);
+                changed = true;
+            }
+            if (avatar != null && !avatar.equals(member.getAvatar())) {
+                member.setAvatar(avatar);
+                changed = true;
+            }
+            if (changed) {
+                memberRepository.save(member);
+            }
+            // ★ DB에서 다시 조회해서 반환
+            return memberRepository.findByUsername(username).orElse(member);
+        }
+        signup(username, "", nickname, avatar);
+        // ★ DB에서 다시 조회해서 반환
+        return memberRepository.findByUsername(username).orElseThrow();
     }
 
     @Transactional

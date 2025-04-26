@@ -23,10 +23,10 @@ public class CustomOAuth2AuthenticationSuccessHandler extends SavedRequestAwareA
     @SneakyThrows
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Member actor = memberService.findById(rq.getActor().getId()).get();
-
-        // 조회된 사용자 정보를 기반으로 인증 쿠키 생성
-        rq.makeAuthCookies(actor);
+        String username = ((SecurityUser) authentication.getPrincipal()).getUsername();
+        Member actor = memberService.findByUsername(username)
+            .orElseThrow(() -> new IllegalStateException("Member not found: " + username));
+        rq.makeAuthCookies(actor); // 최신 nickname, avatar가 반영된 Member로 JWT 생성
         String redirectUrl = request.getParameter("state");
 
         // 추출한 redirectUrl로 리다이렉트

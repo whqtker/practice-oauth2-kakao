@@ -35,6 +35,7 @@ public class Rq {
                 member.getUsername(),
                 "",
                 member.getNickname(),
+                member.getAvatar(), // avatar 추가
                 member.getAuthorities()
         );
 
@@ -49,15 +50,13 @@ public class Rq {
 
     public Member getActor() {
         return Optional.ofNullable(
-                        SecurityContextHolder
-                                .getContext()
-                                .getAuthentication()
-                )
-                .map(Authentication::getPrincipal)
-                .filter(principal -> principal instanceof SecurityUser)
-                .map(principal -> (SecurityUser) principal)
-                .map(securityUser -> new Member(securityUser.getId(), securityUser.getUsername(), securityUser.getNickname()))
-                .orElse(null);
+                SecurityContextHolder.getContext().getAuthentication()
+        )
+        .map(Authentication::getPrincipal)
+        .filter(principal -> principal instanceof SecurityUser)
+        .map(principal -> (SecurityUser) principal)
+        .map(securityUser -> new Member(securityUser.getId(), securityUser.getUsername(), securityUser.getNickname(), securityUser.getAvatar()))
+        .orElse(null);
     }
 
     public void setCookie(String name, String value) {
